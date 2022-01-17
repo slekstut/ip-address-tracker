@@ -31,7 +31,7 @@
             </div>
             <div class="timezone">
               <h5>timezone</h5>
-              <h3>utc-05:00</h3>
+              <h3>UTC-05:00</h3>
             </div>
             <div class="isp">
               <h5>isp</h5>
@@ -66,6 +66,7 @@ export default {
   .bg {
     img {
       width: 100%;
+      min-height: 30vh;
     }
   }
   .container {
@@ -78,42 +79,77 @@ export default {
     transform: translate(-40%, -5%);
     &__box {
       display: grid;
-      gap: 2rem;
+      justify-items: center;
 
-      width: 40%;
-    }
-    h1 {
-      color: $white;
-      font-weight: 500;
-      margin: 0;
-      text-align: center;
-    }
-    .input-data {
-      width: 100%;
-      display: flex;
-      flex-wrap: nowrap;
-      input {
-        padding: 1rem 2rem;
-        width: 100%;
-        border-top-left-radius: 1rem;
-        border-bottom-left-radius: 1rem;
-        border: none;
-        &:hover {
-          cursor: pointer;
+      gap: 2rem;
+      width: 70%;
+      h1 {
+        color: $white;
+        font-weight: 500;
+        margin: 0;
+        text-align: center;
+      }
+      .input-data {
+        width: 70%;
+        display: flex;
+        flex-wrap: nowrap;
+        input {
+          font-size: 1.3rem;
+          padding: 1rem 1.5rem;
+          width: 100%;
+          border-top-left-radius: 1rem;
+          border-bottom-left-radius: 1rem;
+          border: none;
+          &:hover {
+            cursor: pointer;
+          }
+        }
+        button {
+          padding: 1rem 1.5rem;
+          border-top-right-radius: 1rem;
+          border-bottom-right-radius: 1rem;
+          border: none;
+          background-color: $darkGray;
+          &:hover {
+            opacity: 0.85;
+            cursor: pointer;
+          }
         }
       }
-      button {
-        width: 3rem;
-        border-top-right-radius: 1rem;
-        border-bottom-right-radius: 1rem;
-        border: none;
-        background-color: $darkGray;
-        &:hover {
-          opacity: .85;
-          cursor: pointer;
+      .info {
+        background-color: $white;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 2rem;
+        border-radius: 1rem;
+        padding: 1rem;
+        h5 {
+          text-transform: uppercase;
+          color: $lightGray;
+        }
+        h3 {
+          text-transform: capitalize;
+          color: $darkGray;
+        }
+        div:not(:first-child)::before {
+          content: " ";
+          width: 2px;
+          height: 4rem;
+          background-color: $lightGray;
+          position: absolute;
+          margin: 0;
+          margin-left: -1.5rem;
+          margin-top: 1.5rem;
+          opacity: .3;
         }
       }
     }
+  }
+  .map {
+    background-color: red;
+    width: 100%;
+    height: 70vh;
+    margin: 0;
   }
 }
 </style>
