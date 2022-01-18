@@ -3,26 +3,28 @@
     <div class="info">
       <div class="ip-address">
         <h5>ip address</h5>
-        <h3>192.212.174.101</h3>
+        <h3>{{ ipDetails.address }}</h3>
       </div>
       <div class="location">
         <h5>location</h5>
-        <h3>brooklyn, NY 10001</h3>
+        <h3>{{ ipDetails.state }}</h3>
       </div>
       <div class="timezone">
         <h5>timezone</h5>
-        <h3>UTC-05:00</h3>
+        <h3>{{ ipDetails.timezone }}</h3>
       </div>
       <div class="isp">
         <h5>isp</h5>
-        <h3>spaceX Starlink</h3>
+        <h3>{{ ipDetails.isp }}</h3>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+    props: ["ipDetails"]
+};
 </script>
 
 <style lang="scss" scoped>

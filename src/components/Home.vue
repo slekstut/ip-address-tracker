@@ -24,7 +24,7 @@
               </svg>
             </button>
           </div>
-          <IPinfo v-if="ipInfo" />
+          <IPinfo v-if="ipDetails" v-bind:ipDetails="ipDetails"/>
         </div>
       </div>
       <div id="map" class="my-map"></div>
@@ -71,7 +71,14 @@ export default {
           `https://geo.ipify.org/api/v2/country?apiKey=at_nynyqkpWlKzutvGimxdUYAlGxnk9G&ipAddress=${getIp.value}`
         );
         const result = data.data;
-        console.log(result);
+        ipDetails.value = {
+          address: result.ip,
+          state: result.location.region,
+          timezone: result.location.timezone,
+          isp: result.isp,
+          lat: result.location.lat,
+          lng: result.location.lng
+        }
       } catch (error) {
         alert(error.message);
       }
