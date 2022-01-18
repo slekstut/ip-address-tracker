@@ -15,10 +15,10 @@ export default {
 
 <style lang="scss">
 html {
-  scroll-behavior:smooth;
   font-family: $fontFamily;
   font-size: $fontSize;
-
+  box-sizing: border-box;
+  scroll-behavior:smooth;
 }
 *,
 *:before,

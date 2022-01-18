@@ -8,7 +8,10 @@
         <div class="container__box">
           <h1>IP Address Tracker</h1>
           <div class="input-data">
-            <input type="text" />
+            <input
+              type="text"
+              placeholder="Search for any IP address or domain"
+            />
             <button>
               <svg xmlns="http://www.w3.org/2000/svg" width="11" height="14">
                 <path
@@ -63,10 +66,19 @@ export default {
 <style scoped lang="scss">
 .wrapper {
   width: 100%;
+  max-width: 1440px;
+  height: 100vh;
+  margin: 0 auto;
   .bg {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
     img {
-      width: 100%;
-      min-height: 30vh;
+      flex-shrink: 0;
+      min-width: 100%;
+      min-height: 100%;
+      object-fit: cover;
     }
   }
   .container {
@@ -74,40 +86,49 @@ export default {
     place-items: center;
     position: absolute;
     width: 100%;
-    top: 5%;
+    top: 3%;
     left: 40%;
     transform: translate(-40%, -5%);
     &__box {
       display: grid;
       justify-items: center;
-
-      gap: 2rem;
-      width: 70%;
+      gap: 1.5rem;
+      width: 76%;
       h1 {
         color: $white;
+        font-size: 1.8rem;
         font-weight: 500;
         margin: 0;
         text-align: center;
+        line-height: 1;
       }
       .input-data {
         width: 70%;
+        max-width: 31rem;
         display: flex;
         flex-wrap: nowrap;
         input {
           font-size: 1.3rem;
-          padding: 1rem 1.5rem;
+          padding: .8rem 1.5rem;
           width: 100%;
-          border-top-left-radius: 1rem;
-          border-bottom-left-radius: 1rem;
+          border-top-left-radius: .8rem;
+          border-bottom-left-radius: .8rem;
           border: none;
           &:hover {
             cursor: pointer;
           }
         }
+        input,
+        input::-webkit-input-placeholder {
+          font-size: 0.9rem;
+          line-height: 1;
+          color: $lightGray;
+          font-weight: 500;
+        }
         button {
-          padding: 1rem 1.5rem;
-          border-top-right-radius: 1rem;
-          border-bottom-right-radius: 1rem;
+          padding: 1rem 1.2rem;
+          border-top-right-radius: .8rem;
+          border-bottom-right-radius: .8rem;
           border: none;
           background-color: $darkGray;
           &:hover {
@@ -121,26 +142,37 @@ export default {
         display: grid;
         grid-template-columns: repeat(4, 1fr);
         gap: 2rem;
-        border-radius: 1rem;
-        padding: 1rem;
+        border-radius: .8rem;
+        padding: 2rem;
+        margin-top: .7rem;
+        width: 100%;
+        max-width: 62rem;
         h5 {
           text-transform: uppercase;
           color: $lightGray;
+          letter-spacing: 0.1rem;
+          margin: 0;
+          margin-bottom: .5rem;
+          font-size: .65rem;
+
         }
         h3 {
           text-transform: capitalize;
+          font-weight: 700;
           color: $darkGray;
+          max-width: 70%;
+          margin: 0;
         }
         div:not(:first-child)::before {
           content: " ";
-          width: 2px;
+          width: 1px;
           height: 4rem;
           background-color: $lightGray;
           position: absolute;
           margin: 0;
           margin-left: -1.5rem;
-          margin-top: 1.5rem;
-          opacity: .3;
+          margin-top: .5rem;
+          opacity: 0.3;
         }
       }
     }
@@ -148,8 +180,7 @@ export default {
   .map {
     background-color: red;
     width: 100%;
-    height: 70vh;
-    margin: 0;
+    height: 70%;
   }
 }
 </style>
