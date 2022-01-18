@@ -9,10 +9,11 @@
           <h1>IP Address Tracker</h1>
           <div class="input-data">
             <input
+              v-model="getIp"
               type="text"
               placeholder="Search for any IP address or domain"
             />
-            <button>
+            <button @click="getIpDetails">
               <svg xmlns="http://www.w3.org/2000/svg" width="11" height="14">
                 <path
                   fill="none"
@@ -23,43 +24,60 @@
               </svg>
             </button>
           </div>
-          <div class="info">
-            <div class="ip-address">
-              <h5>ip address</h5>
-              <h3>192.212.174.101</h3>
-            </div>
-            <div class="location">
-              <h5>location</h5>
-              <h3>brooklyn, NY 10001</h3>
-            </div>
-            <div class="timezone">
-              <h5>timezone</h5>
-              <h3>UTC-05:00</h3>
-            </div>
-            <div class="isp">
-              <h5>isp</h5>
-              <h3>spaceX Starlink</h3>
-            </div>
-          </div>
+          <IPinfo v-if="ipInfo" />
         </div>
       </div>
-      <div class="map">
-        <div class="map__icon">
-          <svg xmlns="http://www.w3.org/2000/svg" width="46" height="56">
-            <path
-              fill-rule="evenodd"
-              d="M39.263 7.673c8.897 8.812 8.966 23.168.153 32.065l-.153.153L23 56 6.737 39.89C-2.16 31.079-2.23 16.723 6.584 7.826l.153-.152c9.007-8.922 23.52-8.922 32.526 0zM23 14.435c-5.211 0-9.436 4.185-9.436 9.347S17.79 33.128 23 33.128s9.436-4.184 9.436-9.346S28.21 14.435 23 14.435z"
-            />
-          </svg>
-        </div>
-      </div>
+      <div id="map" class="my-map"></div>
     </div>
   </div>
 </template>
 
 <script>
+import IPinfo from "./IPinfo.vue";
+import leaflet from "leaflet";
+import { onMounted, ref } from "vue";
+import axios from "axios";
+
 export default {
   name: "Home",
+  components: {
+    IPinfo,
+  },
+  setup() {
+    let myMap;
+    const getIp = ref("");
+    const ipDetails = ref(null);
+    onMounted(() => {
+      myMap = leaflet.map("map").setView([51.505, -0.09], 13);
+      leaflet
+        .tileLayer(
+          "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}",
+          {
+            attribution:
+              'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+            maxZoom: 18,
+            id: "mapbox/streets-v11",
+            tileSize: 512,
+            zoomOffset: -1,
+            accessToken:
+              "pk.eyJ1Ijoic2xla3N0dXQiLCJhIjoiY2t5azAyMmV3MDk1bDJ3cG5raGVwbndmYiJ9.ROprHM2WK5s_tAQwXvva1w",
+          }
+        )
+        .addTo(myMap);
+    });
+    const getIpDetails = async () => {
+      try {
+        const data = await axios.get(
+          `https://geo.ipify.org/api/v2/country?apiKey=at_nynyqkpWlKzutvGimxdUYAlGxnk9G&ipAddress=${getIp.value}`
+        );
+        const result = data.data;
+        console.log(result);
+      } catch (error) {
+        alert(error.message);
+      }
+    };
+    return { getIp, ipDetails, getIpDetails };
+  },
 };
 </script>
 
@@ -74,6 +92,7 @@ export default {
     justify-content: center;
     align-items: center;
     width: 100%;
+    z-index: 20;
     img {
       flex-shrink: 0;
       min-width: 100%;
@@ -89,6 +108,7 @@ export default {
     top: 3%;
     left: 40%;
     transform: translate(-40%, -5%);
+    z-index: 9999;
     &__box {
       display: grid;
       justify-items: center;
@@ -109,10 +129,10 @@ export default {
         flex-wrap: nowrap;
         input {
           font-size: 1.3rem;
-          padding: .8rem 1.5rem;
+          padding: 0.8rem 1.5rem;
           width: 100%;
-          border-top-left-radius: .8rem;
-          border-bottom-left-radius: .8rem;
+          border-top-left-radius: 0.8rem;
+          border-bottom-left-radius: 0.8rem;
           border: none;
           &:hover {
             cursor: pointer;
@@ -127,8 +147,8 @@ export default {
         }
         button {
           padding: 1rem 1.2rem;
-          border-top-right-radius: .8rem;
-          border-bottom-right-radius: .8rem;
+          border-top-right-radius: 0.8rem;
+          border-bottom-right-radius: 0.8rem;
           border: none;
           background-color: $darkGray;
           &:hover {
@@ -137,50 +157,12 @@ export default {
           }
         }
       }
-      .info {
-        background-color: $white;
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 2rem;
-        border-radius: .8rem;
-        padding: 2rem;
-        margin-top: .7rem;
-        width: 100%;
-        max-width: 62rem;
-        h5 {
-          text-transform: uppercase;
-          color: $lightGray;
-          letter-spacing: 0.1rem;
-          margin: 0;
-          margin-bottom: .5rem;
-          font-size: .65rem;
-
-        }
-        h3 {
-          text-transform: capitalize;
-          font-weight: 700;
-          color: $darkGray;
-          max-width: 70%;
-          margin: 0;
-        }
-        div:not(:first-child)::before {
-          content: " ";
-          width: 1px;
-          height: 4rem;
-          background-color: $lightGray;
-          position: absolute;
-          margin: 0;
-          margin-left: -1.5rem;
-          margin-top: .5rem;
-          opacity: 0.3;
-        }
-      }
     }
   }
-  .map {
-    background-color: red;
+  .my-map {
     width: 100%;
     height: 70%;
+    z-index: 0;
   }
 }
 </style>
