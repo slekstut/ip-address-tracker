@@ -109,33 +109,31 @@ export default {
   width: 100%;
   height: 100%;
   margin: 0 auto;
+  position: relative;
   .bg {
-    display: flex;
-    justify-content: center;
-    align-items: center;
     width: 100%;
-    z-index: 20;
     img {
-      flex-shrink: 0;
       min-width: 100%;
       min-height: 100%;
-      object-fit: cover;
+      display: block;
     }
   }
   .container {
     display: grid;
     place-items: center;
-    position: absolute;
     width: 100%;
-    top: 3%;
-    left: 40%;
-    transform: translate(-40%, -5%);
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
     z-index: 9999;
     &__box {
       display: grid;
       justify-items: center;
       gap: 1.5rem;
-      width: 76%;
+      width: 100%;
+      max-width: 90%;
+      margin-top: 2rem;
       h1 {
         color: $white;
         font-size: 1.8rem;
@@ -145,13 +143,14 @@ export default {
         line-height: 1;
       }
       .input-data {
-        width: 70%;
-        max-width: 31rem;
+        width: 100%;
+        max-width: 60%;
         display: flex;
         flex-wrap: nowrap;
         input {
-          font-size: 1.3rem;
+          font-size: 1.7rem;
           padding: 0.8rem 1.5rem;
+          color: $darkGray !important;
           width: 100%;
           border-top-left-radius: 0.8rem;
           border-bottom-left-radius: 0.8rem;
@@ -183,8 +182,52 @@ export default {
   }
   .my-map {
     width: 100%;
-    height: 50rem;
-    z-index: 0;
+    height: 100vh;
+  }
+}
+
+@media only screen and (max-width: 1024px) {
+  .wrapper {
+    .bg {
+      width: 100%;
+      height: 23rem;
+      img {
+        min-width: 100%;
+        min-height: 100%;
+        display: block;
+      }
+    }
+    .container {
+      &__box {
+        display: grid;
+        grid-template-columns: 1fr;
+        align-items: center;
+        h1 {
+          font-size: 1.5rem;
+        }
+        .input-data {
+          max-width: 100%;
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 414px) {
+  .wrapper {
+    .container {
+      &__box {
+        h1 {
+          font-size: 1.5rem;
+        }
+        .input-data {
+          input {
+            font-size: 1.2rem;
+            font-weight: 500;
+          }
+        }
+      }
+    }
   }
 }
 </style>
