@@ -24,7 +24,7 @@
               </svg>
             </button>
           </div>
-          <IPinfo v-if="ipDetails" v-bind:ipDetails="ipDetails"/>
+          <IPinfo v-if="ipDetails" v-bind:ipDetails="ipDetails" />
         </div>
       </div>
       <div id="map" class="my-map"></div>
@@ -47,8 +47,9 @@ export default {
     let myMap;
     const getIp = ref("");
     const ipDetails = ref(null);
+
     onMounted(() => {
-      myMap = leaflet.map("map").setView([51.505, -0.09], 13);
+      myMap = leaflet.map("map").setView([55.7, 21.14], 15);
       leaflet
         .tileLayer(
           "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}",
@@ -68,17 +69,32 @@ export default {
     const getIpDetails = async () => {
       try {
         const data = await axios.get(
-          `https://geo.ipify.org/api/v2/country?apiKey=at_nynyqkpWlKzutvGimxdUYAlGxnk9G&ipAddress=${getIp.value}`
+          `https://geo.ipify.org/api/v2/country,city?apiKey=at_nynyqkpWlKzutvGimxdUYAlGxnk9G&ipAddress=${getIp.value}`
         );
         const result = data.data;
+        console.log(result);
+        console.log(data);
         ipDetails.value = {
           address: result.ip,
           state: result.location.region,
           timezone: result.location.timezone,
           isp: result.isp,
           lat: result.location.lat,
-          lng: result.location.lng
-        }
+          lng: result.location.lng,
+        };
+        const myIcon = leaflet.icon({
+          iconUrl: "https://i.ibb.co/N22XVDj/icon-location.png",
+          iconSize: [28, 36],
+          iconAnchor: [16, 36],
+        });
+
+        console.log(ipDetails.value.lat);
+        leaflet
+          .marker([ipDetails.value.lat, ipDetails.value.lng], {
+            icon: myIcon,
+          })
+          .addTo(myMap);
+        myMap.setView([ipDetails.value.lat, ipDetails.value.lng], 13);
       } catch (error) {
         alert(error.message);
       }
@@ -91,8 +107,7 @@ export default {
 <style scoped lang="scss">
 .wrapper {
   width: 100%;
-  max-width: 1440px;
-  height: 100vh;
+  height: 100%;
   margin: 0 auto;
   .bg {
     display: flex;
@@ -168,7 +183,7 @@ export default {
   }
   .my-map {
     width: 100%;
-    height: 70%;
+    height: 50rem;
     z-index: 0;
   }
 }
