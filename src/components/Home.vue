@@ -61,7 +61,7 @@ export default {
             tileSize: 512,
             zoomOffset: -1,
             accessToken:
-              "pk.eyJ1Ijoic2xla3N0dXQiLCJhIjoiY2t5azAyMmV3MDk1bDJ3cG5raGVwbndmYiJ9.ROprHM2WK5s_tAQwXvva1w",
+              "pk.eyJ1Ijoic2xla3N0dXQiLCJhIjoiY2t5azI1MzVwMXIwaTJ1cG10anJ1aDhmeiJ9.bvBCNMZzGJ3dPO1N3uaqxQ",
           }
         )
         .addTo(myMap);
