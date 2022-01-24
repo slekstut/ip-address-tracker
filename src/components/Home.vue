@@ -144,7 +144,7 @@ export default {
       }
       .input-data {
         width: 100%;
-        max-width: 60%;
+        max-width: 30rem;
         display: flex;
         flex-wrap: nowrap;
         input {
